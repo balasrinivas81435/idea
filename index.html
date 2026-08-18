@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Energy Wake-Up Receiver Sensor Network | MSP430 Microcontroller</title>
+    <meta name="description"
+        content="Ultra-Low Power Zero-Energy Wake-Up Receiver Sensor Network powered by Texas Instruments MSP430 microcontroller and nanowatt RF pattern recognition logic.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Mouse Cursor Glow Effect -->
+    <div id="mouse-glow" class="mouse-cursor-glow"></div>
+
+    <!-- Preloader Screen -->
+    <div id="preloader">
+        <div class="loader-circuit">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                <circle cx="50" cy="50" r="42" stroke="rgba(0, 191, 255, 0.2)" stroke-width="4" />
+                <path d="M50 8 A 42 42 0 0 1 92 50" stroke="#00bfff" stroke-width="6" stroke-linecap="round" />
+                <path d="M50 92 A 42 42 0 0 1 8 50" stroke="#00c853" stroke-width="6" stroke-linecap="round" />
+                <circle cx="50" cy="50" r="14" fill="#00bfff" />
+            </svg>
+        </div>
+        <div class="loader-title">ZeroWake MSP430</div>
+        <div class="loader-bar-bg">
+            <div id="loader-fill" class="loader-bar-fill"></div>
+        </div>
+        <div id="loader-percent" class="loader-text">0%</div>
+    </div>
+
+    <!-- Background Canvas & Grid Overlay -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="circuit-overlay"></div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="nav-logo">
+                <div class="logo-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                        <path d="M9 12h6M12 9v6" />
+                        <path d="M1 9h3M1 15h3M20 9h3M20 15h3M9 1h3M15 1h3M9 20h3M15 20h3" />
+                    </svg>
+                </div>
+                <div class="logo-text">ZeroWake <span>MSP430</span></div>
+            </a>
+
+            <ul id="nav-links" class="nav-links">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                <li><a href="#simulator" class="nav-link">Live Sim</a></li>
+                <li><a href="#stats" class="nav-link">Statistics</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#timeline" class="nav-link">Timeline</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <div class="live-clock-badge">
+                    <span class="clock-dot"></span>
+                    <span id="live-clock">--:--:--</span>
+                </div>
+
+                <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Dark/Light Mode">
+                    <!-- Icon injected by script.js -->
+                </button>
+
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Toggle Mobile Menu">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <div class="hero-text-side">
+                <div class="hero-badge">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    NEXT-GEN NANOWATT IOT ARCHITECTURE
+                </div>
+
+                <h1 class="hero-title glowing-title">
+                    Zero-Energy <span class="text-gradient">Wake-Up Receiver</span> Sensor Network
+                </h1>
+
+                <div class="hero-subtitle-wrap">
+                    <span id="typing-target" class="typing-text"></span>
+                </div>
+
+                <div class="hero-ctas">
+                    <a href="#architecture" class="btn btn-primary">
+                        Explore Architecture
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+
+                    <a href="#simulator" class="btn btn-glass">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Launch Live Sim
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Visual Box -->
+            <div class="hero-visual-side">
+                <div class="hero-visual-card">
+                    <div class="hero-mcu-badge">
+                        <div class="mcu-chip-name">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <path d="M9 9h6v6H9z" />
+                            </svg>
+                            TI MSP430FR5994 MCU
+                        </div>
+                        <div class="power-status-pill">LPM4.5 Deep Sleep</div>
+                    </div>
+
+                    <div class="hero-img-wrap">
+                        <img src="assets/images/msp430_hardware_node.png"
+                            alt="MSP430 Wake-Up Receiver Hardware Prototype">
+                    </div>
+
+                    <div class="hero-mini-stats">
+                        <div class="mini-stat-item">
+                            <div class="mini-stat-val">&lt; 50 nW</div>
+                            <div class="mini-stat-lbl">Standby Power</div>
+                        </div>
+                        <div class="mini-stat-item">
+                            <div class="mini-stat-val">&lt; 4.5 μs</div>
+                            <div class="mini-stat-lbl">Wake-Up Latency</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#features" class="scroll-indicator">
+            <div class="mouse-icon">
+                <div class="wheel-dot"></div>
+            </div>
+            <span>SCROLL DOWN</span>
+        </a>
+    </section>
+
+    <!-- Features Section (Glassmorphism Cards) -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Key Features</div>
+                <h2 class="section-title">Ultra-Low Power <span class="text-gradient">Innovations</span></h2>
+                <p class="section-desc">Designed to achieve zero-energy standby states, combining energy harvesting with
+                    Texas Instruments MSP430 LPM4.5 power modes.</p>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="2" y="7" width="16" height="10" rx="2" />
+                            <line x1="22" y1="11" x2="22" y2="13" />
+                            <line x1="6" y1="11" x2="6" y2="13" />
+                            <line x1="10" y1="11" x2="10" y2="13" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Zero Standby Power</h3>
+                    <p class="card-desc">Node main micro-controller remains in deep LPM4.5 power mode (sub-100nA draw)
+                        until an RF pattern triggers the wake-up interrupt.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Sub-GHz RF Receiver</h3>
+                    <p class="card-desc">High-sensitivity passive envelope detector rectifying sub-GHz radio waves to
+                        generate a physical hardware interrupt signal.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="4" y="4" width="16" height="16" rx="2" />
+                            <path d="M9 9h6v6H9z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">MSP430 Integration</h3>
+                    <p class="card-desc">Texas Instruments 16-Bit FRAM microcontroller offering fast wake-up recovery
+                        time (&lt;4.5μs) and non-volatile state retention.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Energy Harvesting</h3>
+                    <p class="card-desc">Solar and ambient RF energy harvester module charging ultra-capacitors for
+                        infinite maintenance-free deployment.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Cloud IoT Telemetry</h3>
+                    <p class="card-desc">High-speed burst telemetry transmission over LoRa/FSK following sensor payload
+                        acquisition before returning to sleep.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass-card">
+                    <div class="card-icon-wrap">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="3" y="11" width="18" height="11" rx="2" />
+                            <path d="M7 11V7a5 5 0 0110 0v4" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Hardware Address Demux</h3>
+                    <p class="card-desc">16-bit address matching logic verifying incoming wake-up packet sequence to
+                        prevent false wakeups from ambient noise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Architecture Block Diagram Section -->
+    <section id="architecture" class="architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">System Architecture</div>
+                <h2 class="section-title">Hardware <span class="text-gradient">Block Diagram</span></h2>
+                <p class="section-desc">Click any component block below to inspect its schematic specs, signal
+                    waveforms, and operational parameters.</p>
+            </div>
+
+            <div class="block-diagram-container">
+                <!-- Interactive Block Flow -->
+                <div class="diagram-pipeline">
+                    <div class="diagram-node-card active" data-block="antenna">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">RF Antenna & Harvester</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="filter">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">SAW Bandpass Filter</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="detector">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <polygon points="12 2 22 12 12 22 2 12 12 2" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">Envelope Detector</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="comparator">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 8v8M8 12h8" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">Nanowatt Comparator</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="interrupt">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">GPIO Interrupt</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="msp430">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <path d="M9 9h6v6H9z" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">TI MSP430 MCU</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-node-card" data-block="transceiver">
+                        <div class="diagram-node-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0" />
+                            </svg>
+                        </div>
+                        <div class="diagram-node-title">LoRa Transceiver</div>
+                    </div>
+                </div>
+
+                <!-- Inspector Panel -->
+                <div class="diagram-inspector">
+                    <div class="inspector-info">
+                        <h3 id="inspector-title">RF Antenna & Energy Harvester</h3>
+                        <p id="inspector-desc">Compact sub-GHz patch antenna paired with a high-efficiency RF energy
+                            harvester circuit collecting ambient RF energy.</p>
+                        <ul id="inspector-specs" class="spec-list">
+                            <!-- Injected by script.js -->
+                        </ul>
+                    </div>
+
+                    <div class="inspector-visual">
+                        <canvas id="waveform-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Live Sensor Node Simulator -->
+    <section id="simulator" class="simulator-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Interactive Workbench</div>
+                <h2 class="section-title">Live Sensor <span class="text-gradient">Node Simulator</span></h2>
+                <p class="section-desc">Trigger a wireless wake-up packet and observe the state machine transitions and
+                    real-time oscilloscope power consumption.</p>
+            </div>
+
+            <div class="simulator-card">
+                <div class="sim-controls-bar">
+                    <button id="trigger-wake-btn" class="btn btn-primary">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Send RF Wake-Up Packet
+                    </button>
+
+                    <div class="sim-status-display">
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">Status:</span>
+                        <div id="sim-state-badge" class="node-state-badge">IDLE: Deep LPM4.5 Sleep (0.00 μA)</div>
+                    </div>
+                </div>
+
+                <div class="sim-stage-container">
+                    <!-- Visual Nodes Box -->
+                    <div class="sim-node-visual">
+                        <div class="sim-node-box">
+                            <svg width="32" height="32" fill="none" stroke="var(--accent-secondary)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0" />
+                            </svg>
+                            <span>Gateway TX</span>
+                        </div>
+
+                        <div id="sim-node-box" class="sim-node-box">
+                            <svg width="32" height="32" fill="none" stroke="var(--accent-primary)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <path d="M9 9h6v6H9z" />
+                            </svg>
+                            <span>MSP430 Node</span>
+                        </div>
+                    </div>
+
+                    <!-- Oscilloscope Canvas Box -->
+                    <div class="oscilloscope-box">
+                        <div class="scope-header">
+                            <span>REAL-TIME POWER CONSUMPTION</span>
+                            <span style="color: var(--accent-primary);">SCALE: 0 - 25mA</span>
+                        </div>
+                        <canvas id="oscilloscope-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics & Metrics Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Performance Benchmarks</div>
+                <h2 class="section-title">Measured <span class="text-gradient">Power Metrics</span></h2>
+                <p class="section-desc">Empirical laboratory benchmark statistics collected from the MSP430 zero-energy
+                    wake-up receiver prototype.</p>
+            </div>
+
+            <div class="stats-grid">
+                <!-- Stat Card 1 -->
+                <div class="stat-card">
+                    <div class="stat-circle-wrap">
+                        <svg class="stat-circle-svg" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="54" />
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="54" />
+                        </svg>
+                    </div>
+                    <div class="stat-number" data-target="50" data-unit="nW" data-percent="98">&lt; 50nW</div>
+                    <div class="stat-label">Standby Power Draw</div>
+                </div>
+
+                <!-- Stat Card 2 -->
+                <div class="stat-card">
+                    <div class="stat-circle-wrap">
+                        <svg class="stat-circle-svg" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="54" />
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="54" />
+                        </svg>
+                    </div>
+                    <div class="stat-number" data-target="99.8" data-unit="%" data-percent="99.8">99.8%</div>
+                    <div class="stat-label">Energy Savings vs Continuous Rx</div>
+                </div>
+
+                <!-- Stat Card 3 -->
+                <div class="stat-card">
+                    <div class="stat-circle-wrap">
+                        <svg class="stat-circle-svg" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="54" />
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="54" />
+                        </svg>
+                    </div>
+                    <div class="stat-number" data-target="10" data-unit=" Yrs" data-percent="95">10+ Yrs</div>
+                    <div class="stat-label">Maintenance-Free Lifespan</div>
+                </div>
+
+                <!-- Stat Card 4 -->
+                <div class="stat-card">
+                    <div class="stat-circle-wrap">
+                        <svg class="stat-circle-svg" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="54" />
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="54" />
+                        </svg>
+                    </div>
+                    <div class="stat-number" data-target="100" data-unit="m+" data-percent="90">100m+</div>
+                    <div class="stat-label">RF Wake-Up Operational Distance</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sliding Image Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Hardware Showcase</div>
+                <h2 class="section-title">Prototype <span class="text-gradient">Image Gallery</span></h2>
+                <p class="section-desc">Inspect high-resolution rendered views of our MSP430 development setup, custom
+                    PCB schematics, and field enclosures.</p>
+            </div>
+
+            <div class="gallery-container">
+                <div class="carousel-wrapper">
+                    <div id="carousel-track" class="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide">
+                            <div class="slide-img-wrap">
+                                <img src="assets/images/msp430_hardware_node.png"
+                                    alt="MSP430 Hardware Development Node">
+                                <div class="slide-caption">
+                                    <div class="slide-title">MSP430 Hardware Node & RF Receiver Module</div>
+                                    <div class="slide-desc">TI MSP430 LaunchPad interfaced with custom nanowatt envelope
+                                        detector board.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide">
+                            <div class="slide-img-wrap">
+                                <img src="assets/images/rf_wake_up_circuit.png"
+                                    alt="Nano-power RF Wake-Up Receiver Circuit PCB">
+                                <div class="slide-caption">
+                                    <div class="slide-title">Nano-Power RF Envelope Detector PCB</div>
+                                    <div class="slide-desc">Extreme close-up view of zero-bias Schottky diodes and
+                                        comparator network.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide">
+                            <div class="slide-img-wrap">
+                                <img src="assets/images/energy_harvester_module.png"
+                                    alt="Energy Harvester & Storage Module">
+                                <div class="slide-caption">
+                                    <div class="slide-title">Solar & RF Energy Harvester Module</div>
+                                    <div class="slide-desc">Integrated supercapacitor storage bank for perpetual outdoor
+                                        telemetry.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="carousel-slide">
+                            <div class="slide-img-wrap">
+                                <img src="assets/images/field_sensor_deployment.png"
+                                    alt="Outdoor Sensor Node Enclosure">
+                                <div class="slide-caption">
+                                    <div class="slide-title">Outdoor Smart Environment Sensor Node</div>
+                                    <div class="slide-desc">IP67 waterproof telemetry pole node deployed in smart
+                                        agricultural monitoring.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="carousel-prev" class="carousel-btn prev" aria-label="Previous Slide">❮</button>
+                    <button id="carousel-next" class="carousel-btn next" aria-label="Next Slide">❯</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal">
+        <div class="lightbox-content">
+            <button id="lightbox-close" class="lightbox-close">✕</button>
+            <img id="lightbox-img" class="lightbox-img" src="" alt="Lightbox Preview">
+            <div id="lightbox-caption" class="lightbox-caption-text"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Project Timeline -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Project Milestones</div>
+                <h2 class="section-title">Development <span class="text-gradient">Timeline</span></h2>
+                <p class="section-desc">Key engineering milestones achieved during the design and deployment of the
+                    Zero-Energy Receiver Network.</p>
+            </div>
+
+            <div class="timeline-wrap">
+                <!-- Milestone 1 -->
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-phase">PHASE 1</div>
+                        <h3 class="timeline-title">RF Receiver Circuit Simulation</h3>
+                        <p class="timeline-desc">Designed zero-bias Schottky diode envelope detector schematics in SPICE
+                            and optimized matching networks for 868MHz ISM band.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-phase">PHASE 2</div>
+                        <h3 class="timeline-title">MSP430 LPM4.5 Firmware Optimization</h3>
+                        <p class="timeline-desc">Configured Texas Instruments MSP430FR5994 FRAM MCU for deep LPM4.5
+                            low-power mode with fast NMI interrupt wake-up vector.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-phase">PHASE 3</div>
+                        <h3 class="timeline-title">Energy Harvesting Integration</h3>
+                        <p class="timeline-desc">Interfaced solar photovoltaic cells and RF energy harvester ICs with
+                            supercapacitor power management modules.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 4 -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-phase">PHASE 4</div>
+                        <h3 class="timeline-title">Field Deployment & Range Testing</h3>
+                        <p class="timeline-desc">Deployed physical sensor nodes in outdoor environments, verifying
+                            reliable 100m+ RF wake-up trigger range and zero standby loss.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="nav-logo" style="margin-bottom: 12px;">
+                        <div class="logo-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <path d="M9 12h6M12 9v6" />
+                            </svg>
+                        </div>
+                        <div class="logo-text">ZeroWake <span>MSP430</span></div>
+                    </div>
+                    <p>Zero-Energy Wake-Up Receiver Sensor Network research project utilizing TI MSP430 FRAM
+                        microcontrollers for ultra-low power IoT applications.</p>
+
+                    <div class="team-avatars">
+                        <div class="team-avatar-pill">
+                            <span class="text-emerald">●</span> Team Embedded Systems
+                        </div>
+                        <div class="team-avatar-pill">
+                            <span class="text-sky">●</span> Dept of ECE
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Home Banner</a></li>
+                        <li><a href="#features">Key Features</a></li>
+                        <li><a href="#architecture">Hardware Diagram</a></li>
+                        <li><a href="#simulator">Node Simulator</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Documentation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#stats">Power Metrics</a></li>
+                        <li><a href="#gallery">Hardware Gallery</a></li>
+                        <li><a href="#timeline">Project Roadmap</a></li>
+                        <li><a href="https://www.ti.com/product/MSP430FR5994" target="_blank" rel="noopener">TI
+                                MSP430FR5994 Specs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright-bar">
+                © 2026 Zero-Energy Wake-Up Receiver Project | Built with MSP430 Microcontroller Technology
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button & Scroll To Top -->
+    <div class="fab-container">
+        <a href="#simulator" class="fab-btn" title="Launch Node Simulator">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+        </a>
+
+        <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to Top">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M18 15l-6-6-6 6" />
+            </svg>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
